@@ -1,6 +1,6 @@
-str1 = "aab"
-str2 = "axy"
-strIL = "aaxayb"
+str1 = "axy"
+str2 = "a"
+strIL = "aaxy"
 """
 String interleave is a task which needs dynamic programming,
 We have to create 2 dimensional array which has 1 extra column and 1 extra row
@@ -10,9 +10,9 @@ class Solution(object):
     @staticmethod
     def check_interleave(str1, str2, strIL):
         if len(strIL) == 0:
-            return False
+            print("\nstrIL = %s, is not the interleaving of str1 = %s and  str2 = %s " % (strIL, str1, str2))
         elif (len(str1) + len(str2)) != len(strIL):
-            return False
+            print("\nstrIL = %s, is not the interleaving of str1 = %s and  str2 = %s " % (strIL, str1, str2))
         else:
             # initializing the 2 dimensional array (il_dp = interleaving dynamic programming)
             il_dp = [[0]*(len(str1)+1) for i in range(len(str2)+1)]
@@ -32,12 +32,14 @@ class Solution(object):
                         il_dp[i][j+1] = il_dp[i][j]
                     else:
                         print("\t\t\til_dp[%s][%s] != il_dp[%s][%s] = %s" % (i, (j + 1), i, j, il_dp[i][j]))
-                    print("\t\tstrIL[%s] == str2[%s]" % ((i + j), j), "(%s == %s)" % (strIL[i + j], str2[j]))
+                        pass
+                    print("\t\tstrIL[%s] == str2[%s]" % ((i + j), i), "(%s == %s)" % (strIL[i + j], str2[i]))
                     if strIL[i+j] == str2[i]:
                         print("\t\t\til_dp[%s][%s] = il_dp[%s][%s] = %s" % ((i + 1), j, i, j, il_dp[i][j]))
                         il_dp[i+1][j] = il_dp[i][j]
                     else:
                         print("\t\t\til_dp[%s][%s] != il_dp[%s][%s] = %s" % ((i + 1), j, i, j, il_dp[i][j]))
+                        pass
 
             """
             The last element of the 2 dimensional cannot be accessed from the for loop inside
@@ -54,10 +56,10 @@ class Solution(object):
 
             """
             print("\nDynamic Programming array used:  ")
-            print("   | 0 |", " | ".join(i for i in str1))
-            print(" 0 |"," | ".join(str(il_dp[0][i]) for i in range(len(str1)+1)))
+            print("\033[91;1m   | 0 |", " | ".join(i for i in str1))
+            print(" 0 |\033[0m"," | ".join(str(il_dp[0][i]) for i in range(len(str1)+1)))
             for i in range(0, len(str2)):
-                print("",str2[i],"|"," | ".join(str(il_dp[i+1][j]) for j in range(len(str1)+1)))
+                print("\033[91;1m",str2[i],"|\033[0m"," | ".join(str(il_dp[i+1][j]) for j in range(len(str1)+1)))
 
             if il_dp[len(str2)][len(str1)] == 1:
                 print("\nstrIL = %s, is the interleaving of str1 = %s and  str2 = %s " %(strIL, str1, str2))
